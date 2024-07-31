@@ -15,7 +15,9 @@ class ArticleRepositoryImpl implements ArticleRepository{
   Future<DataState<List<ArticleModel>>> getNewsArticles() async {
     try{
       final httpResponse  = await _newsApiService.getNewsArticles(
-      sources:sourceQuery ,
+      q:qData,
+      from: fromData,
+      sortBy: sortData,
       apiKey: newsAPI,
     ); 
     if(httpResponse.response.statusCode == HttpStatus.ok){

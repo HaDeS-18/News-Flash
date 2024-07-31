@@ -8,6 +8,7 @@ import 'package:news_app/injection_container.dart';
 //ignore_for_file: super-parameters;
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
   runApp(const MyApp());
 }

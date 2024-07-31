@@ -22,18 +22,22 @@ class _NewsApiService implements NewsApiService {
 
   @override
   Future<HttpResponse<List<ArticleModel>>> getNewsArticles({
+    String? q,
+    String? from,
+    String? sortBy,
     String? apiKey,
-    String? sources,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
+      r'q': q,
+      r'from': from,
+      r'sortBy': sortBy,
       r'apiKey': apiKey,
-      r'sources': sources,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String,dynamic>>(
+    final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<HttpResponse<List<ArticleModel>>>(Options(
       method: 'GET',
       headers: _headers,
@@ -41,7 +45,7 @@ class _NewsApiService implements NewsApiService {
     )
             .compose(
               _dio.options,
-              '/top-headlines',
+              '/everything',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -50,8 +54,8 @@ class _NewsApiService implements NewsApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    List<ArticleModel> _value = _result.data!['articles']
-        .map<ArticleModel>((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
+    var _value = _result.data!
+        .map((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
         .toList();
     final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
