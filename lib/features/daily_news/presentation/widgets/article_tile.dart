@@ -19,6 +19,10 @@ class ArticleWidget extends StatelessWidget {
   }): super(key: key);
 
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
